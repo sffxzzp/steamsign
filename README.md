@@ -26,4 +26,8 @@ size=small
 ------
 If not set. It'll create a bigger picture.
 
-*attention: if signatrue is created. it'll automaticly stored into SQL. and it could only be refreshed after about 22 hours.*
+*attention: if signatrue is created. it'll automaticly stored into SQL. and it could only be refreshed after about 22 hours. or manually delete.*
+
+delete={steamUser64ID}
+------
+see steamid.

@@ -27,6 +27,11 @@ if($_GET["steamid"]) {
         drawSign($picData);
     }
 }
+elseif ($_GET["delete"]) {
+    $steamid = $_GET["delete"];
+    sqlExec($sqlInfo, "DELETE FROM storage WHERE steamid = '{$steamid}'");
+    echo "delete pic '{$steamid}' success!";
+}
 else {
     if ($_GET["install"]) {
         if ($_GET["install"]=='init') {
