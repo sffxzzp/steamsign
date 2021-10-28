@@ -2,17 +2,17 @@
 require_once('config.php');
 require_once('functions.php');
 
-if($_GET["steamid"]) {
+if(isset($_GET["steamid"])) {
     $steamid = $_GET["steamid"];
-    $oldTime = mysqli_fetch_array(sqlExec($sqlInfo, "SELECT * FROM time"));
+    $oldTime = mysqli_fetch_array(sqlExec($sqlInfo, "SELECT * FROM {$tabletime}"));
     $oldTime = intval($oldTime["time"]);
     $newTime = time();
     if ($newTime-$oldTime>80000) {
-        sqlExec($sqlInfo, "TRUNCATE TABLE time");
-        sqlExec($sqlInfo, "INSERT INTO time (ID, time) VALUES (0, {$newTime})");
-        sqlExec($sqlInfo, "TRUNCATE TABLE storage");
+        sqlExec($sqlInfo, "TRUNCATE TABLE {$tabletime}");
+        sqlExec($sqlInfo, "INSERT INTO {$tabletime} (ID, time) VALUES (0, {$newTime})");
+        sqlExec($sqlInfo, "TRUNCATE TABLE {$tablestorage}");
     }
-    $oldData = getDataById($sqlInfo, $steamid);
+    $oldData = getDataById($sqlInfo, $steamid, $tablestorage);
     if ($oldData) {
         drawSign($oldData["pic"]);
     }
@@ -23,19 +23,19 @@ if($_GET["steamid"]) {
         else {
             $picData = makeSign(getUserData($key, $steamid), 1);
         }
-        sqlExec($sqlInfo, "INSERT INTO storage (ID, steamid, pic) VALUES (0, '{$steamid}', '{$picData}')");
+        sqlExec($sqlInfo, "INSERT INTO {$tablestorage} (ID, steamid, pic) VALUES (0, '{$steamid}', '{$picData}')");
         drawSign($picData);
     }
 }
-elseif ($_GET["delete"]) {
+elseif (isset($_GET["delete"])) {
     $steamid = $_GET["delete"];
-    sqlExec($sqlInfo, "DELETE FROM storage WHERE steamid = '{$steamid}'");
+    sqlExec($sqlInfo, "DELETE FROM {$tablestorage} WHERE steamid = '{$steamid}'");
     echo "delete pic '{$steamid}' success!";
 }
 else {
-    if ($_GET["install"]) {
+    if (isset($_GET["install"])) {
         if ($_GET["install"]=='init') {
-            sqlInit($sqlInfo);
+            sqlInit($sqlInfo, $tabletime, $tablestorage);
         }
     }
 }

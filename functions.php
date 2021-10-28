@@ -16,20 +16,21 @@ function curl($url, $referer="", $useragent="", $header=array(), $post=0, $post_
     curl_close($curl);
     return $src;
 }
-function sqlInit($sqlInfo) {
+function sqlInit($sqlInfo, $tabletime, $tablestorage) {
     $conn = mysqli_connect($sqlInfo["host"], $sqlInfo["user"], $sqlInfo["pwd"], $sqlInfo["db"]);
-    if (mysqli_connect_errno($conn)) {
+    if (!$conn) {
         echo "连接到 MySQL 服务器失败：" . mysqli_connect_error();
         return False;
     }
-    mysqli_query($conn, "CREATE TABLE time(ID INT Unique NOT NULL AUTO_INCREMENT, time INT)");
-    mysqli_query($conn, "CREATE TABLE storage(ID INT Unique NOT NULL AUTO_INCREMENT, steamid TEXT, pic TEXT)");
+    mysqli_query($conn, "CREATE TABLE {$tabletime}(ID INT Unique NOT NULL AUTO_INCREMENT, time INT)");
+    mysqli_query($conn, "CREATE TABLE {$tablestorage}(ID INT Unique NOT NULL AUTO_INCREMENT, steamid TEXT, pic TEXT)");
     mysqli_close($conn);
+    echo '数据库初始化成功！';
     return True;
 }
 function sqlExec($sqlInfo, $command) {
     $conn = mysqli_connect($sqlInfo["host"], $sqlInfo["user"], $sqlInfo["pwd"], $sqlInfo["db"]);
-    if (mysqli_connect_errno($conn)) {
+    if (!$conn) {
         echo "连接到 MySQL 服务器失败：" . mysqli_connect_error();
         return False;
     }
@@ -37,8 +38,8 @@ function sqlExec($sqlInfo, $command) {
     mysqli_close($conn);
     return $result;
 }
-function getDataById($sqlInfo, $steamid) {
-    $Data = sqlExec($sqlInfo, "SELECT * FROM storage WHERE steamid='{$steamid}';");
+function getDataById($sqlInfo, $steamid, $tablestorage) {
+    $Data = sqlExec($sqlInfo, "SELECT * FROM {$tablestorage} WHERE steamid='{$steamid}';");
     if ($Data == False) {return False;}
     $oldData = array();
     while ($row = mysqli_fetch_array($Data)) {
@@ -111,7 +112,7 @@ function makeSign($userInfo, $imgBig=1) {
     imagefill($bgImage, 0, 0, $bgColor);
     
     //draw username.
-    $ttf = './SIMYOU.TTF';
+    $ttf = './zh.ttf';
     $white = imagecolorallocate($bgImage, 255, 255, 255);
     $nameTop = 30;
     imagettftext($bgImage, 18, 0, $imgHeight, $nameTop, $white, $ttf, $username);

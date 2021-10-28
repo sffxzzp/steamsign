@@ -1,8 +1,12 @@
 <?php
 $sqlInfo = array(
-    "host"  =>  "SERVER_IP",
-    "user"  =>  "MySQL_USER",
-    "pwd"   =>  "MySQL_PassWord",
-    "db"    =>  "DataBase"
+    "host"  =>  getenv('MYSQLHOST').':'.getenv('MYSQLPORT'),
+    "user"  =>  getenv('MYSQLUSER'),
+    "pwd"   =>  getenv('MYSQLPASSWORD'),
+    "db"    =>  getenv('MYSQLDATABASE')
 );
-$key = "ENTER_API_KEY_HERE";
+$key = getenv('STEAMAPIKEY');
+
+$prefix = 'ss_';
+$tabletime = $prefix.'time';
+$tablestorage = $prefix.'storage';
