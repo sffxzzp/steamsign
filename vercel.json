@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/:SteamID", "destination": "/api/" },
+    { "source": "/", "destination": "/api/" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [{ "key": "Cache-Control", "value": "s-maxage=14400, stale-while-revalidate=14400" }] }
+  ]
+}
