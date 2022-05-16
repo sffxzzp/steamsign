@@ -150,22 +150,29 @@ func (c *Card) render(w *http.ResponseWriter) {
 func Handler(w http.ResponseWriter, r *http.Request) {
 	SteamID := r.URL.Query().Get("SteamID")
 	if len(SteamID) <= 16 {
+		if SteamID == "favicon.ico" {
+			w.WriteHeader(404)
+			return
+		}
 		SteamID = os.Getenv("SteamID")
 	}
 	card := newCard(SteamID)
 	succ := true
 	succ = card.getUserInfo()
 	if !succ {
+		w.WriteHeader(503)
 		fmt.Fprint(w, "Network Error")
 		return
 	}
 	succ = card.getStatsInfo()
 	if !succ {
+		w.WriteHeader(503)
 		fmt.Fprint(w, "Network Error")
 		return
 	}
 	succ = card.getRecentInfo()
 	if !succ {
+		w.WriteHeader(503)
 		fmt.Fprint(w, "Network Error")
 		return
 	}
