@@ -143,6 +143,7 @@ func (c *Card) render(w *http.ResponseWriter) {
 	tpl = strings.Replace(tpl, "{{.Level}}", strconv.Itoa(c.Level), -1)
 	tpl = strings.Replace(tpl, "{{.GameNum}}", strconv.Itoa(c.GameNum), -1)
 	(*w).Header().Set("Content-Type", "image/svg+xml; charset=utf-8")
+	(*w).Header().Set("Cache-Control", "public, max-age=14400, s-maxage=14400, stale-while-revalidate=14400")
 	fmt.Fprint(*w, tpl)
 }
 
