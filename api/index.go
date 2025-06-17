@@ -49,6 +49,12 @@ type (
 			} `json:"games"`
 		} `json:"response"`
 	}
+	AppDetailsRet struct {
+		Success bool `json:"success"`
+		Data    struct {
+			HeaderImage string `json:"header_image"`
+		} `json:"data"`
+	}
 )
 
 func httpGet(url string) ([]byte, bool) {
@@ -114,6 +120,22 @@ func (c *Card) getStatsInfo() bool {
 	return true
 }
 
+func (c *Card) getHeaderImage(appID string) string {
+	data, err := httpGet(fmt.Sprintf("https://store.steampowered.com/api/appdetails?appids=%s", appID))
+	if err {
+		return ""
+	}
+	var appDetails = map[string]AppDetailsRet{}
+	err1 := json.Unmarshal(data, &appDetails)
+	if err1 != nil {
+		return ""
+	}
+	if !appDetails[appID].Success {
+		return ""
+	}
+	return appDetails[appID].Data.HeaderImage
+}
+
 func (c *Card) getRecentInfo() bool {
 	data, err := httpGet(fmt.Sprintf(c.recentUrl, c.apiKey, c.SteamID))
 	if err {
@@ -124,7 +146,7 @@ func (c *Card) getRecentInfo() bool {
 	for i, v := range recentData.Response.Games {
 		if i < 3 {
 			// c.Recent = append(c.Recent, getWebImage(fmt.Sprintf("https://media.st.dl.pinyuncloud.com/steam/apps/%d/header.jpg", v.AppID)))
-			c.Recent = append(c.Recent, getWebImage(fmt.Sprintf("https://steamcdn-a.akamaihd.net/steam/apps/%d/header.jpg", v.AppID)))
+			c.Recent = append(c.Recent, getWebImage(c.getHeaderImage(strconv.Itoa(v.AppID))))
 		} else {
 			break
 		}
