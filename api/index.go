@@ -121,17 +121,18 @@ func (c *Card) getStatsInfo() bool {
 }
 
 func (c *Card) getHeaderImage(appID string) string {
+	fallbackImage := fmt.Sprintf("https://steamcdn-a.akamaihd.net/steam/apps/%s/header.jpg", appID)
 	data, err := httpGet(fmt.Sprintf("https://store.steampowered.com/api/appdetails?appids=%s", appID))
 	if err {
-		return ""
+		return fallbackImage
 	}
 	var appDetails = map[string]AppDetailsRet{}
 	err1 := json.Unmarshal(data, &appDetails)
 	if err1 != nil {
-		return ""
+		return fallbackImage
 	}
 	if !appDetails[appID].Success {
-		return ""
+		return fallbackImage
 	}
 	return appDetails[appID].Data.HeaderImage
 }
