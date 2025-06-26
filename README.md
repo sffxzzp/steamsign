@@ -1,7 +1,7 @@
 SteamSign
 ======
 
-EdgeOne 版的 Steam 签名档生成工具，因 KV 还在审核中，暂时没做缓存。
+EdgeOne 版的 Steam 签名档生成工具，因 KV 还在审核中，所以缓存是用 Cache API 实现，可能没 KV 稳。
 
 示例地址：[https://stsign.edgeone.app/](https://stsign.edgeone.app/)
 
