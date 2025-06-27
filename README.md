@@ -9,6 +9,8 @@ EdgeOne 版的 Steam 签名档生成工具，因 KV 还在审核中，所以缓�
 
 需要设置环境变量 apikey 为 Steam 的 API KEY，可[在此](https://steamcommunity.com/dev)获取。
 
-好像官方把按钮修好了，现在可以一键部署了。
+还需要设置环境变量 steamid，是在不带参数情况下的默认显示的 Steam 用户的 [64 位 ID](https://help.steampowered.com/zh-cn/faqs/view/2816-BE67-5B69-0FEC)。
+
+官方好像把按钮修好了，现在可以一键部署了。
 
 [![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fsffxzzp%2Fsteamsign%2Ftree%2Fedgeone&env=apikey,steamid)
