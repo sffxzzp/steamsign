@@ -11,4 +11,4 @@ EdgeOne 版的 Steam 签名档生成工具，因 KV 还在审核中，所以缓�
 
 好像官方把按钮修好了，现在可以一键部署了。
 
-[![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fsffxzzp%2Fsteamsign%2Ftree%2Fedgeone&env=apikey)
+[![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fsffxzzp%2Fsteamsign%2Ftree%2Fedgeone&env=apikey,steamid)

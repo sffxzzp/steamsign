@@ -1,5 +1,3 @@
-const defaultSteamID = "76561198137595648";
-
 let arrayBufferToBase64 = function (buffer) {
     let binary = '';
     let bytes = new Uint8Array(buffer);
@@ -67,7 +65,7 @@ export async function onRequest({request, params, env}) {
     if (pathname[1] == "favicon.ico") {
         return new Response("Not Found", {status: 404});
     }
-    let steamid = pathname[1] ? pathname[1] : defaultSteamID;
+    let steamid = pathname[1] ? pathname[1] : env.steamid;
     let cacheKey = new Request('https://cache.key/'+steamid);
     const cache = caches.default;
     let res = await cache.match(cacheKey);
