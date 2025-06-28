@@ -3,9 +3,11 @@ SteamSign
 
 EdgeOne 版的 Steam 签名档生成工具，因 KV 还在审核中，所以缓存是用 Cache API 实现，可能没 KV 稳。
 
-示例地址（国内网络可能 401，但绑个自定义域名就行）：[https://stsign.edgeone.app/76561198137595648](https://stsign.edgeone.app/76561198137595648)
+示例地址（国内网络可能 401）：[https://stsign-jyf3xzkoe7.edgeone.app/76561198137595648](https://stsign-jyf3xzkoe7.edgeone.app/76561198137595648)
 
-[![示例图片](https://stsign.edgeone.app/76561198137595648)](https://stsign.edgeone.app/76561198137595648)
+怎么直接用 stsign.edgeone.app 这个地址设置的环境变量就不能正常加载，怎么毛病这么多？
+
+[![示例图片](https://stsign-jyf3xzkoe7.edgeone.app/76561198137595648)](https://stsign-jyf3xzkoe7.edgeone.app/76561198137595648)
 
 需要设置环境变量 apikey 为 Steam 的 API KEY，可[在此](https://steamcommunity.com/dev)获取。
 
