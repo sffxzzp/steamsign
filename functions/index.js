@@ -68,14 +68,17 @@ export async function onRequest({request, params, env}) {
     let steamid = pathname[1] ? pathname[1] : env.steamid;
     let cacheKey = new Request('https://cache.key/'+steamid);
     const cache = caches.default;
-    let res = await cache.match(cacheKey);
-    if (res) {
+    try {
+        let res = await cache.match(cacheKey);
         res = new Response(res.body, res);
         res.headers.set('x-edgefunctions-cache', 'hit');
         return res;
+    } catch (err) {
+        await cache.delete(cacheKey);
+        let userInfo = await getUserInfo(steamid, 3, env.apikey);
+        let res = await renderCard(userInfo);
+        await cache.put(cacheKey, res.clone());
+        res.headers.set('x-edgefunctions-cache', 'miss');
+        return res;
     }
-    let userInfo = await getUserInfo(steamid, 3, env.apikey);
-    res = await renderCard(userInfo);
-    await cache.put(cacheKey, res.clone());
-    return res;
 }
